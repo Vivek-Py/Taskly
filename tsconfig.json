@@ -18,10 +18,12 @@
     "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
+      "@atomComponents/*": ["components/atom/*"],
       "@pages/*": ["pages/*"],
       "@store/*": ["store/*"],
       "@api/*": ["api/*"],
-      "@routes/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["src"]

@@ -1,8 +1,8 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import PrivateRoute from "../components/PrivateRoute";
+import React from 'react';
+import {Routes, Route} from 'react-router-dom';
+import Home from '@pages/Home';
+import Login from '@pages/Login';
+import PrivateRoute from '@components/PrivateRoute';
 
 const AppRoutes: React.FC = () => {
   return (
