@@ -7,7 +7,7 @@ const Pill: React.FC<PillProps> = ({count, text, icon, active = false, onClick})
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsShrinking(true);
     if (onClick) onClick();
-    setTimeout(() => setIsShrinking(false), 300); // Duration of the shrink animation
+    setTimeout(() => setIsShrinking(false), 300);
   };
 
   return (
