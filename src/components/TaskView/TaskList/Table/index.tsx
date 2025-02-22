@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion';
 import Icon from '@atomComponents/Icon';
 import {useState, useEffect} from 'react';
-import {ITask} from '@store/useTaskStore';
+import {ITask, useTaskStore} from '@store/useTaskStore';
 import Pagination from '@components/atom/Pagination';
 
 import PriorityDropdown from './PriorityDropdown';
@@ -12,7 +12,8 @@ const dataCellStyle = 'border border-gray-300 px-4 py-2';
 
 const Table = ({data}: {data: ITask[]}) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const {setSelectedTask} = useTaskStore();
 
   useEffect(() => {
     setCurrentPage(1);
@@ -53,9 +54,10 @@ const Table = ({data}: {data: ITask[]}) => {
           paginatedData.map((task) => (
             <motion.tr
               key={task.id}
-              className="h-12 rounded-none hover:bg-green-100 cursor-pointer"
+              className="h-12 rounded-none hover:bg-gray-200 cursor-pointer"
               whileHover={{scale: 1.05}}
               whileTap={{scale: 0.95}}
+              onClick={() => setSelectedTask(task.id)}
             >
               <td className={`${dataCellStyle} truncate`}>
                 <div className="truncate" title={task.title}>

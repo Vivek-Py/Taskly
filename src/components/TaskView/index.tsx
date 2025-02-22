@@ -4,11 +4,9 @@ import TaskList from './TaskList';
 import Button from '@atomComponents/Button';
 import Icon from '@atomComponents/Icon';
 import Stats from '@components/Stats';
-import Drawer from '@components/atom/Drawer';
 
 const TaskView = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [showDrawer, setShowDrawer] = useState<boolean>(false);
   return (
     <div>
       <div className="flex flex-row justify-between items-center mb-4">
@@ -22,9 +20,6 @@ const TaskView = () => {
       </div>
       <TaskList />
       <AddTaskModal isOpen={showModal} onClose={() => setShowModal(false)} />
-      <Drawer isOpen={showDrawer} onClose={() => setShowDrawer(false)}>
-        <div>Hello</div>
-      </Drawer>
     </div>
   );
 };

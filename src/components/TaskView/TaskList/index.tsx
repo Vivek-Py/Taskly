@@ -1,10 +1,10 @@
 import {useTaskStore} from '@store/useTaskStore';
 import Table from './Table';
 import SearchComponent from '@atomComponents/Search';
-import {useMemo, useState} from 'react';
+import {useMemo} from 'react';
 import Icon from '@atomComponents/Icon';
 import Button from '@atomComponents/Button';
-import Pagination from '@atomComponents/Pagination';
+import TaskDetails from '@components/TaskDetails';
 
 const TaskList: React.FC = () => {
   const {tasks, filter, setFilter} = useTaskStore();
@@ -37,6 +37,7 @@ const TaskList: React.FC = () => {
         />
       </div>
       <Table data={filteredTasks} />
+      <TaskDetails />
     </div>
   );
 };

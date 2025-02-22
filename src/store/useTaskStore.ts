@@ -3,9 +3,10 @@ import {persist} from 'zustand/middleware';
 
 type ITaskStatus = 'completed' | 'not_started' | 'in_progress';
 type ITaskPriority = 'none' | 'low' | 'medium' | 'high' | 'urgent';
+type ITaskId = number | string;
 
 interface ITask {
-  id: number | string;
+  id: ITaskId;
   title: string;
   priority: string;
   status: string;
@@ -25,6 +26,8 @@ interface TaskStore {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   addTask: (task: ITask) => void;
+  selectedTask: ITaskId | null;
+  setSelectedTask: (taskId: ITaskId | null) => void;
 }
 
 const useTaskStore = create<TaskStore>()(
@@ -47,7 +50,9 @@ const useTaskStore = create<TaskStore>()(
         set((state) => ({
           tasks: [...state.tasks, task]
         }));
-      }
+      },
+      selectedTask: null,
+      setSelectedTask: (taskId) => set({selectedTask: taskId})
     }),
     {
       name: 'task-storage',
