@@ -1,17 +1,18 @@
+import {motion} from 'framer-motion';
 import Icon from '@atomComponents/Icon';
+import {useState, useEffect} from 'react';
 import {ITask} from '@store/useTaskStore';
+import Pagination from '@components/atom/Pagination';
+
 import PriorityDropdown from './PriorityDropdown';
 import StatusDropdown from './StatusDropdown';
-import Pagination from '@components/atom/Pagination';
-import {useState, useEffect} from 'react';
-import {motion} from 'framer-motion';
 
 const headingCellStyle = 'border border-gray-300 px-4 py-2 text-left bg-gray-100';
 const dataCellStyle = 'border border-gray-300 px-4 py-2';
-const itemsPerPage = 9;
 
 const Table = ({data}: {data: ITask[]}) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -81,6 +82,7 @@ const Table = ({data}: {data: ITask[]}) => {
               totalItems={data.length}
               itemsPerPage={itemsPerPage}
               onPageChange={(page) => setCurrentPage(page)}
+              setItemsPerPage={setItemsPerPage}
             />
           </td>
         </tr>

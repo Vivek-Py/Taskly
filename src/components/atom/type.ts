@@ -38,3 +38,19 @@ export interface PillProps {
   active?: boolean;
   onClick?: () => void;
 }
+
+export type ToastType = 'success' | 'error' | 'info';
+
+export interface Toast {
+  id: number;
+  message: string;
+  type: ToastType;
+}
+
+export interface ToastContextProps {
+  addToast: (message: string, type: ToastType, icon?: ReactNode) => void;
+}
+
+export interface ToastProviderProps {
+  children: ReactNode;
+}
