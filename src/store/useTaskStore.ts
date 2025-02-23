@@ -68,9 +68,9 @@ const useTaskStore = create<TaskStore>()(
       setSelectedTask: (taskId) => set({selectedTask: taskId}),
       updateTask: (taskId, task) => {
         set((state) => {
-          const index = Number(taskId) - 1;
+          const idx = state.tasks.findIndex((t) => t.id === taskId);
           const tasks = [...state.tasks];
-          tasks[index] = {...tasks[index], ...task};
+          tasks[idx] = {...tasks[idx], ...task};
           return {tasks};
         });
       },

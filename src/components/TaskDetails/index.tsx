@@ -24,18 +24,16 @@ const TaskDetail: FC = () => {
       const task = tasks.find((task) => task.id === selectedTask) as ITask;
       setTaskDetail(task);
     }
+
+    return () => setTaskDetail({id: '', title: '', status: '', priority: '', description: ''});
   }, [selectedTask, tasks]);
 
   const onClose = () => setSelectedTask(null);
 
   const handleTaskUpdate = () => {
     try {
-      updateTask(taskDetail.id, {
-        title: taskDetail.title,
-        description: taskDetail.description,
-        status: taskDetail.status,
-        priority: taskDetail.priority
-      });
+      console.log('Going to update');
+      updateTask(taskDetail.id, taskDetail);
       onClose();
       addToast('Task updated successfully', 'success');
     } catch (error) {

@@ -13,6 +13,9 @@ interface TaskFormProps {
 }
 
 const TaskForm: FC<TaskFormProps> = ({taskDetail, setTaskDetail, handleTaskUpdate, onClose}) => {
+  const additionalField = Object.keys(taskDetail).filter(
+    (key) => !['id', 'title', 'priority', 'status', 'description'].includes(key)
+  );
   return (
     <>
       <input
@@ -78,6 +81,22 @@ const TaskForm: FC<TaskFormProps> = ({taskDetail, setTaskDetail, handleTaskUpdat
           className="mt-2 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
           placeholder="Enter task description"
         />
+        {additionalField.length > 0 && (
+          <div className="mt-4">
+            {additionalField.map((field) => (
+              <div key={field} className="mt-2">
+                <label className="block text-md font-medium text-black">{field}</label>
+                <input
+                  type="text"
+                  value={taskDetail[field]}
+                  onChange={(e) => setTaskDetail({...taskDetail, [field]: e.target.value})}
+                  className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none"
+                  placeholder={`Enter ${field}`}
+                />
+              </div>
+            ))}
+          </div>
+        )}
         <div className="flex flex-row justify-end gap-2 mt-4">
           <span className="items-center bg-blue-100 rounded-md">
             <Button
