@@ -9,7 +9,6 @@ export const taskService = {
       const response = await api.get(
         'https://gist.githubusercontent.com/yangshun/7acbe005af922e43a26dea8109e16aed/raw/01df391c8320df0a37c73fdbf6b8fc7d88aae719/greatfrontend-tasks.json'
       );
-      // response.data.length = 10;
       setTasks(response.data);
       return response.data;
     } catch (error) {

@@ -5,11 +5,10 @@ import {useTaskStore} from '@store/useTaskStore';
 import {PRIORITY, STATUS} from '@utils/constants';
 import {formDefaultValues} from './constants';
 import {TAddTaskProps, TFormData, TFormEvent, TOnChangeHandler} from './type';
-import {generateUniqueId} from '@utils/index';
 import {useToast} from '@components/atom/Toast';
 
 const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
-  const {addTask} = useTaskStore();
+  const {tasks, addTask} = useTaskStore();
   const [formData, setFormData] = useState<TFormData>(formDefaultValues);
   const {addToast} = useToast();
 
@@ -24,7 +23,7 @@ const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
       addToast('Title is required', 'error');
       return;
     }
-    addTask({id: generateUniqueId(), ...formData});
+    addTask({id: tasks.length + 1, ...formData});
     onClose();
     addToast('Task added successfully', 'success');
   };

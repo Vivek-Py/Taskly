@@ -1,5 +1,12 @@
-const Icon = ({name}: {name: string}) => {
-  return <span className="material-symbols-outlined">{name}</span>;
+import {FC} from 'react';
+import {IconProps} from './type';
+
+const Icon: FC<IconProps> = ({name, className, ...rest}) => {
+  return (
+    <span className={'material-symbols-outlined ' + className} {...rest}>
+      {name}
+    </span>
+  );
 };
 
 export default Icon;

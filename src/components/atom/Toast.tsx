@@ -1,5 +1,6 @@
-import {FC, createContext, useContext, useState, useCallback, ReactNode} from 'react';
 import {createPortal} from 'react-dom';
+import {FC, createContext, useContext, useState, useCallback, ReactNode} from 'react';
+
 import Icon from './Icon';
 import {Toast, ToastContextProps, ToastProviderProps, ToastType} from './type';
 

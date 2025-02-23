@@ -1,10 +1,10 @@
-import {ButtonHTMLAttributes, ReactNode} from 'react';
+import {ButtonHTMLAttributes, HTMLAttributes, ReactNode} from 'react';
 
 type BaseButtonProps = {
   id: string;
   label: string;
   icon?: ReactNode;
-  btnType?: 'primary' | 'secondary' | 'tertiary' | 'icon';
+  btnType?: 'primary' | 'secondary' | 'tertiary' | 'icon' | 'icon-with-text';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 type SubmitButtonProps = BaseButtonProps & {
@@ -53,4 +53,12 @@ export interface ToastContextProps {
 
 export interface ToastProviderProps {
   children: ReactNode;
+}
+
+export type IconProps = {
+  name: string;
+} & HTMLAttributes<HTMLSpanElement>;
+
+export interface IButtonTypes {
+  [key: string]: string;
 }

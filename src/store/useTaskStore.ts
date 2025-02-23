@@ -10,6 +10,7 @@ interface ITask {
   title: string;
   priority: string;
   status: string;
+  description?: string;
 }
 
 interface TaskFilter {
@@ -28,6 +29,8 @@ interface TaskStore {
   addTask: (task: ITask) => void;
   selectedTask: ITaskId | null;
   setSelectedTask: (taskId: ITaskId | null) => void;
+  updateTask: (taskId: ITaskId, task: Partial<ITask>) => void;
+  deleteTask: (taskId: ITaskId) => void;
 }
 
 const useTaskStore = create<TaskStore>()(
@@ -52,7 +55,20 @@ const useTaskStore = create<TaskStore>()(
         }));
       },
       selectedTask: null,
-      setSelectedTask: (taskId) => set({selectedTask: taskId})
+      setSelectedTask: (taskId) => set({selectedTask: taskId}),
+      updateTask: (taskId, task) => {
+        set((state) => {
+          const index = Number(taskId) - 1;
+          const tasks = [...state.tasks];
+          tasks[index] = {...tasks[index], ...task};
+          return {tasks};
+        });
+      },
+      deleteTask: (taskId) => {
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== taskId)
+        }));
+      }
     }),
     {
       name: 'task-storage',

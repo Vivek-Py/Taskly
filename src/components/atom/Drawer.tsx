@@ -1,6 +1,5 @@
 import {FC, ReactNode} from 'react';
 import useEscapeKey from '../../hooks/useEscapeKey';
-import Icon from './Icon';
 
 interface DrawerProps {
   isOpen: boolean;
@@ -15,10 +14,7 @@ const Drawer: FC<DrawerProps> = ({isOpen, onClose, children}) => {
   return (
     <div className="fixed inset-0 z-50">
       <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
-      <div className="fixed inset-y-0 right-0 w-1/3 bg-white shadow-lg p-4">   
-        <button className="text-black" onClick={onClose}>
-          <Icon name="close" />
-        </button>
+      <div className="fixed inset-y-0 right-0 w-1/3 bg-white shadow-lg p-4">
         <div className="mt-4">{children}</div>
       </div>
     </div>

@@ -1,84 +1,74 @@
 import Button from '@components/atom/Button';
 import Drawer from '@components/atom/Drawer';
 import Icon from '@components/atom/Icon';
-import { useTaskStore } from '@store/useTaskStore';
+import {useToast} from '@components/atom/Toast';
+import {ITask, useTaskStore} from '@store/useTaskStore';
 import {FC, useEffect, useState} from 'react';
-
+import TaskForm from './TaskForm';
 
 const TaskDetail: FC = () => {
-  const {tasks,selectedTask, setSelectedTask} = useTaskStore();
-  const [taskDetail, setTaskDetail] = useState<any>({
+  const {tasks, updateTask, selectedTask, setSelectedTask, deleteTask} = useTaskStore();
+  const [taskDetail, setTaskDetail] = useState<ITask>({
     id: '',
     title: '',
     status: '',
-    priority: ''
+    priority: '',
+    description: ''
   });
+  const {addToast} = useToast();
 
   useEffect(() => {
-     selectedTask !== null && setTaskDetail(tasks.find(task => task.id === selectedTask));
-  },[selectedTask, tasks])
+    if (selectedTask !== null) {
+      const task = tasks.find((task) => task.id === selectedTask) as ITask;
+      setTaskDetail(task);
+    }
+  }, [selectedTask, tasks]);
 
-  const getStatusClass = (status: string) => {
-    switch (status) {
-      case 'To Do':
-        return 'bg-gray-300 text-gray-800';
-      case 'In Progress':
-        return 'bg-yellow-300 text-yellow-800';
-      case 'Completed':
-        return 'bg-green-300 text-green-800';
-      default:
-        return '';
+  const onClose = () => setSelectedTask(null);
+
+  const handleTaskUpdate = () => {
+    try {
+      updateTask(taskDetail.id, {
+        title: taskDetail.title,
+        description: taskDetail.description,
+        status: taskDetail.status,
+        priority: taskDetail.priority
+      });
+      onClose();
+      addToast('Task updated successfully', 'success');
+    } catch (error) {
+      addToast('Failed to update task: ' + error, 'error');
     }
   };
 
-  const getPriorityClass = (priority: string) => {
-    switch (priority) {
-      case 'Low':
-        return 'bg-blue-200 text-blue-800';
-      case 'Medium':
-        return 'bg-yellow-200 text-yellow-800';
-      case 'High':
-        return 'bg-red-200 text-red-800';
-      default:
-        return '';
+  const handleTaskDelete = () => {
+    try {
+      deleteTask(taskDetail.id);
+      setSelectedTask(null);
+      addToast('Task deleted successfully', 'success');
+    } catch (error) {
+      addToast('Failed to delete task: ' + error, 'error');
     }
   };
 
   return (
-    <Drawer isOpen={selectedTask !== null} onClose={() => setSelectedTask(null)}>
-        <div className="relative w-1/1 rounded overflow-hidden bg-rose-100 p-4 shadow-sm">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">{taskDetail.title}</h2>
-
-            <div className="mt-2">
-            <span className={`inline-block py-1 rounded-full text-sm font-medium ${getStatusClass(taskDetail.status)}`}>
-                Status: {taskDetail.status}
-            </span>
-            </div>
-
-            <div className="mt-2">
-            <span className={`inline-block py-1 rounded-full text-sm font-medium ${getPriorityClass(taskDetail.priority)}`}>
-                Priority: {taskDetail.priority}
-            </span>
-            </div>
-        </div>
-        <div className="mt-6">
-            <label className="block text-md font-medium text-gray-700">Description:</label>
-            <textarea
-                value={taskDetail.description}
-                onChange={() => {}}
-                rows={4}
-                className="mt-2 w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Enter task description"
-            />
-            <div className='flex flex-row justify-end gap-2'>
-            <span className='bg-blue-300 rounded-md'>
-            <Button id="check" label='check' btnType="icon" icon={<Icon name="check" />} onClick={() => {}} />
-            </span>
-            <span className='bg-red-300 rounded-md'>
-            <Button id="close" label='close' btnType="icon" icon={<Icon name="close" />} onClick={() => {}} />
-            </span>
-            </div>
-        </div>
+    <Drawer isOpen={selectedTask !== null} onClose={onClose}>
+      <div className="relative w-full rounded overflow-hidden bg-white p-4">
+        <TaskForm
+          taskDetail={taskDetail}
+          setTaskDetail={setTaskDetail}
+          handleTaskUpdate={handleTaskUpdate}
+          onClose={onClose}
+        />
+      </div>
+      <Button
+        id="delete-task"
+        label="Delete"
+        btnType="icon"
+        className="absolute bottom-10 right-10 cursor-pointer border border-gray-300 rounded-full p-3 px-4 bg-red-500"
+        icon={<Icon name="delete" className="text-white" />}
+        onClick={handleTaskDelete}
+      />
     </Drawer>
   );
 };
