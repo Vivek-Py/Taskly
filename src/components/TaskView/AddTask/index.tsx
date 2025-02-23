@@ -11,7 +11,7 @@ import useEscapeKey from 'hooks/useEscapeKey';
 import {generateUniqueId} from '@utils/index';
 
 const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
-  const {tasks, addTask, customFields} = useTaskStore();
+  const {addTask, customFields} = useTaskStore();
   const [formData, setFormData] = useState<TFormData>(formDefaultValues);
   const {addToast} = useToast();
   useEscapeKey(onClose);
