@@ -89,7 +89,10 @@ const Table = ({data}: {data: ITask[]}) => {
               className="h-12 rounded-none hover:bg-gray-200 cursor-pointer"
               whileHover={{scale: 1.05}}
               whileTap={{scale: 0.95}}
-              onClick={() => setSelectedTask(task.id)}
+              onClick={() => {
+                console.log('Task clicked:', task.id, task.title);
+                setSelectedTask(task.id);
+              }}
             >
               <td className={`${dataCellStyle} truncate`}>
                 <div className="truncate" title={task.title}>

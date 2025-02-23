@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from './Button';
 import {PaginationProps} from './type';
 
@@ -33,6 +33,10 @@ const Pagination: React.FC<PaginationProps> = ({
       setPageInput(currentPage);
     }
   };
+
+  useEffect(() => {
+    setPageInput(1);
+  }, [totalItems]);
 
   return (
     <div className="flex flex-row justify-between items-center">

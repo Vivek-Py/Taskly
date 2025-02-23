@@ -11,7 +11,14 @@ interface ITask {
   priority: string;
   status: string;
   description?: string;
+  [key: string]: any;
 }
+
+type CustomField = {
+  name: string;
+  type: string;
+  label: string;
+};
 
 interface TaskFilter {
   status: ITaskStatus | null;
@@ -31,6 +38,9 @@ interface TaskStore {
   setSelectedTask: (taskId: ITaskId | null) => void;
   updateTask: (taskId: ITaskId, task: Partial<ITask>) => void;
   deleteTask: (taskId: ITaskId) => void;
+  customFields: CustomField[];
+  addCustomField: (field: CustomField) => void;
+  removeCustomField: (fieldName: string) => void;
 }
 
 const useTaskStore = create<TaskStore>()(
@@ -68,7 +78,13 @@ const useTaskStore = create<TaskStore>()(
         set((state) => ({
           tasks: state.tasks.filter((task) => task.id !== taskId)
         }));
-      }
+      },
+      customFields: [],
+      addCustomField: (field) => set((state) => ({customFields: [...state.customFields, field]})),
+      removeCustomField: (fieldName) =>
+        set((state) => ({
+          customFields: state.customFields.filter((field) => field.name !== fieldName)
+        }))
     }),
     {
       name: 'task-storage',
@@ -77,6 +93,6 @@ const useTaskStore = create<TaskStore>()(
   )
 );
 
-export type {ITask, ITaskStatus, ITaskPriority, TaskFilter};
+export type {ITask, ITaskStatus, ITaskPriority, TaskFilter, CustomField};
 
 export {useTaskStore};

@@ -6,11 +6,15 @@ import {PRIORITY, STATUS} from '@utils/constants';
 import {formDefaultValues} from './constants';
 import {TAddTaskProps, TFormData, TFormEvent, TOnChangeHandler} from './type';
 import {useToast} from '@components/atom/Toast';
+import CustomFieldsManager from './CustomFieldsManager';
+import useEscapeKey from 'hooks/useEscapeKey';
+import {generateUniqueId} from '@utils/index';
 
 const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
-  const {tasks, addTask} = useTaskStore();
+  const {tasks, addTask, customFields} = useTaskStore();
   const [formData, setFormData] = useState<TFormData>(formDefaultValues);
   const {addToast} = useToast();
+  useEscapeKey(onClose);
 
   const handleChange = (e: TOnChangeHandler) => {
     const {name, value} = e.target;
@@ -23,7 +27,7 @@ const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
       addToast('Title is required', 'error');
       return;
     }
-    addTask({id: tasks.length + 1, ...formData});
+    addTask({id: generateUniqueId(), ...formData});
     onClose();
     addToast('Task added successfully', 'success');
   };
@@ -80,6 +84,31 @@ const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
             </select>
           </div>
         </div>
+        {customFields.map((field) => (
+          <div key={field.name} className="space-y-2">
+            <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
+              {field.label}
+            </label>
+            {field.type === 'text' && (
+              <input
+                id={field.name}
+                name={field.name}
+                type="text"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+              />
+            )}
+            {field.type === 'number' && (
+              <input
+                id={field.name}
+                name={field.name}
+                type="number"
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+              />
+            )}
+          </div>
+        ))}
         <div className="flex justify-end space-x-4 pt-4">
           <Button
             id="form-button-close"
@@ -97,6 +126,7 @@ const AddTask: React.FC<TAddTaskProps> = ({isOpen, onClose}) => {
           />
         </div>
       </form>
+      <CustomFieldsManager />
     </Modal>
   );
 };
