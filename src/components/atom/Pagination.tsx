@@ -1,13 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from './Button';
-
-interface PaginationProps {
-  currentPage: number;
-  totalItems: number;
-  itemsPerPage: number;
-  onPageChange: (page: number) => void;
-  setItemsPerPage: (itemsPerPage: number) => void;
-}
+import {PaginationProps} from './type';
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
@@ -17,10 +10,27 @@ const Pagination: React.FC<PaginationProps> = ({
   setItemsPerPage
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [pageInput, setPageInput] = useState(currentPage);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       onPageChange(page);
+      setPageInput(page);
+    }
+  };
+
+  const handlePageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setPageInput(Number(value));
+    }
+  };
+
+  const handlePageInputBlur = () => {
+    if (pageInput >= 1 && pageInput <= totalPages) {
+      handlePageChange(pageInput);
+    } else {
+      setPageInput(currentPage);
     }
   };
 
@@ -40,7 +50,17 @@ const Pagination: React.FC<PaginationProps> = ({
           <option value={50}>50</option>
         </select>
       </div>
-      <span>{`Page ${currentPage} of ${totalPages || 1}`}</span>
+      <div className="flex items-center space-x-2">
+        <span>Page</span>
+        <input
+          type="number"
+          value={pageInput}
+          onChange={handlePageInputChange}
+          onBlur={handlePageInputBlur}
+          className="w-12 border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring focus:border-blue-300"
+        />
+        <span>{`of ${totalPages || 1}`}</span>
+      </div>
       <div className="flex flex-row space-x-2">
         <Button
           id="previous-page-btn"

@@ -62,3 +62,11 @@ export type IconProps = {
 export interface IButtonTypes {
   [key: string]: string;
 }
+
+export interface PaginationProps {
+  currentPage: number;
+  totalItems: number;
+  itemsPerPage: number;
+  onPageChange: (page: number) => void;
+  setItemsPerPage: (itemsPerPage: number) => void;
+}
