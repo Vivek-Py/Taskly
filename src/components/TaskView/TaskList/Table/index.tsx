@@ -3,7 +3,6 @@ import Icon from '@atomComponents/Icon';
 import {useState, useEffect} from 'react';
 import {ITask, useTaskStore} from '@store/useTaskStore';
 import Pagination from '@components/atom/Pagination';
-
 import PriorityDropdown from './PriorityDropdown';
 import StatusDropdown from './StatusDropdown';
 
@@ -13,14 +12,33 @@ const dataCellStyle = 'border border-gray-300 px-4 py-2';
 const Table = ({data}: {data: ITask[]}) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | 'initial'>('initial');
   const {setSelectedTask} = useTaskStore();
 
   useEffect(() => {
     setCurrentPage(1);
   }, [data]);
 
+  const handleSort = () => {
+    setSortOrder((prevOrder) => {
+      if (prevOrder === 'asc') return 'desc';
+      if (prevOrder === 'desc') return 'initial';
+      return 'asc';
+    });
+  };
+
+  const sortedData = [...data].sort((a, b) => {
+    if (sortOrder === 'asc') {
+      return a.title.localeCompare(b.title);
+    } else if (sortOrder === 'desc') {
+      return b.title.localeCompare(a.title);
+    } else {
+      return 0;
+    }
+  });
+
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedData = sortedData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <table className="table-fixed border-collapse w-full">
@@ -32,18 +50,32 @@ const Table = ({data}: {data: ITask[]}) => {
       <thead>
         <tr>
           <th className={headingCellStyle}>
-            <div className="flex flex-row gap-2 items-center">
-              <Icon name="edit_note" />
-              Task Name
+            <div
+              className="flex flex-row gap-2 justify-between items-center cursor-pointer select-none"
+              onClick={handleSort}
+            >
+              <div className="flex flex-row gap-2 items-center">
+                <Icon name="edit_note" />
+                Task Name
+              </div>
+              <Icon
+                name={
+                  sortOrder === 'asc'
+                    ? 'arrow_upward'
+                    : sortOrder === 'desc'
+                    ? 'arrow_downward'
+                    : 'reorder'
+                }
+              />
             </div>
           </th>
           <th className={headingCellStyle}>
-            <div className="relative">
+            <div className="relative select-none">
               <PriorityDropdown />
             </div>
           </th>
           <th className={headingCellStyle}>
-            <div className="relative">
+            <div className="relative select-none">
               <StatusDropdown />
             </div>
           </th>
