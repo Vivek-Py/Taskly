@@ -5,6 +5,7 @@ import {useToast} from '@components/atom/Toast';
 import {ITask, useTaskStore} from '@store/useTaskStore';
 import {FC, useEffect, useState} from 'react';
 import TaskForm from './TaskForm';
+import {motion} from 'framer-motion';
 
 const TaskDetail: FC = () => {
   const {tasks, updateTask, selectedTask, setSelectedTask, deleteTask} = useTaskStore();
@@ -16,6 +17,7 @@ const TaskDetail: FC = () => {
     description: ''
   });
   const {addToast} = useToast();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (selectedTask !== null) {
@@ -42,25 +44,38 @@ const TaskDetail: FC = () => {
   };
 
   const handleTaskDelete = () => {
-    try {
-      deleteTask(taskDetail.id);
-      setSelectedTask(null);
-      addToast('Task deleted successfully', 'success');
-    } catch (error) {
-      addToast('Failed to delete task: ' + error, 'error');
-    }
+    setIsDeleting(true);
+    setTimeout(() => {
+      try {
+        deleteTask(taskDetail.id);
+        setSelectedTask(null);
+        addToast('Task deleted successfully', 'success');
+      } catch (error) {
+        addToast('Failed to delete task: ' + error, 'error');
+      } finally {
+        setIsDeleting(false);
+      }
+    }, 700);
   };
 
   return (
     <Drawer isOpen={selectedTask !== null} onClose={onClose}>
-      <div className="relative w-full rounded overflow-hidden bg-white p-4">
+      <motion.div
+        className="relative w-full rounded overflow-hidden bg-white p-4"
+        animate={
+          isDeleting
+            ? {y: 200, opacity: 0, rotate: 45, scale: 0.5}
+            : {y: 0, opacity: 1, rotate: 0, scale: 1}
+        }
+        transition={{duration: 0.7}}
+      >
         <TaskForm
           taskDetail={taskDetail}
           setTaskDetail={setTaskDetail}
           handleTaskUpdate={handleTaskUpdate}
           onClose={onClose}
         />
-      </div>
+      </motion.div>
       <Button
         id="delete-task"
         label="Delete"

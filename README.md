@@ -1,8 +1,31 @@
-# Getting Started with Create React App
+# Taskly
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with following:
 
-## Available Scripts
+- [Create React App](https://create-react-app.dev/)
+- [Yarn](https://yarnpkg.com/)
+- [Tailwind CSS]()
+- [Framer Motion]()
+
+## Milestones Achieved
+
+### Core
+
+- Milestone 1: Task management (CRUD)
+  Create a table view that lists all tasks, displaying key details such as the task title, priority, and status.
+- Milestone 2: Managing tasks
+  Provide a mechanism for users to create, edit and delete the tasks.
+- Milestone 3: Filtering and sorting
+- Self created Milestone: Search Capability
+- Milestone 4: Pagination
+- Milestone 5: Local persistence
+- Milestone 6: Custom fields
+
+### Bonus
+
+- Animations and Transitions
+
+## Commands
 
 In the project directory, you can run:
 

@@ -70,3 +70,9 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
   setItemsPerPage: (itemsPerPage: number) => void;
 }
+
+export interface DrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}
