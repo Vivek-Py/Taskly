@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import Icon from '@atomComponents/Icon';
 import {ITaskStatus, useTaskStore} from '@store/useTaskStore';
 import {Status} from './constants';
@@ -9,6 +9,12 @@ const StatusDropdown = () => {
   const handleFilter = (filter: ITaskStatus | null) => {
     setFilter({status: filter});
   };
+  const formatStatus = useCallback((status: string) => {
+    return status
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }, []);
   return (
     <>
       <div
@@ -46,7 +52,7 @@ const StatusDropdown = () => {
                 setShowStatusFilter(false);
               }}
             >
-              {status}
+              {formatStatus(status)}
             </div>
           ))}
         </div>

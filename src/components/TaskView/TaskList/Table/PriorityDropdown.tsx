@@ -38,7 +38,7 @@ const PriorityDropdown = () => {
           {Priorities.map((priority) => (
             <div
               key={priority}
-              className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${
+              className={`px-4 py-2 hover:bg-gray-100 cursor-pointer capitalize ${
                 filter.priority === priority ? 'text-blue-600 font-medium' : ''
               }`}
               onClick={() => {

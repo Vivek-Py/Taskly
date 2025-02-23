@@ -51,28 +51,28 @@ const Login: React.FC = () => {
         className="relative mb-8"
       >
         <SunIcon />
-        <motion.div
-          className="absolute -right-4 -bottom-4 text-3xl"
-          animate={{rotate: [0, 20, -20, 20, 0]}}
-          transition={{repeat: Infinity, duration: 1, ease: 'easeInOut'}}
-        >
-          👋
-        </motion.div>
       </motion.div>
       <motion.h1
-        className="text-3xl font-bold mb-8 text-gray-800"
+        className="text-3xl font-bold mb-8 text-gray-800 flex flex-row items-center gap-2"
         initial={{opacity: 0, y: -10}}
         animate={{opacity: 1, y: 0}}
         transition={{duration: 1}}
       >
         Welcome Back!
+        <motion.div
+          className="text-3xl self-start"
+          animate={{rotate: [0, 20, -20, 20, 0]}}
+          transition={{repeat: Infinity, duration: 1, ease: 'easeInOut'}}
+        >
+          👋
+        </motion.div>
       </motion.h1>
 
       <motion.button
         onClick={handleLogin}
         whileHover={{scale: 1.1}}
         whileTap={{scale: 0.9}}
-        className="relative overflow-hidden px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+        className="relative overflow-hidden px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 "
       >
         Continue as Guest
       </motion.button>

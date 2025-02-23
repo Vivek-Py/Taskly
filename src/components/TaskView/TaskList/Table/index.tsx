@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion';
 import Icon from '@atomComponents/Icon';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {ITask, useTaskStore} from '@store/useTaskStore';
 import Pagination from '@components/atom/Pagination';
 import PriorityDropdown from './PriorityDropdown';
@@ -39,6 +39,13 @@ const Table = ({data, customField}: {data: ITask[]; customField: string | null})
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = sortedData.slice(startIndex, startIndex + itemsPerPage);
+
+  const formatStatus = useCallback((status: string) => {
+    return status
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }, []);
 
   return (
     <>
@@ -109,8 +116,8 @@ const Table = ({data, customField}: {data: ITask[]; customField: string | null})
                     {task.title}
                   </div>
                 </td>
-                <td className={dataCellStyle}>{task.priority}</td>
-                <td className={dataCellStyle}>{task.status}</td>
+                <td className={`${dataCellStyle} capitalize`}>{task.priority}</td>
+                <td className={dataCellStyle}>{formatStatus(task.status)}</td>
                 {customField && (
                   <td className={dataCellStyle + ' truncate'}>{task[customField]}</td>
                 )}
