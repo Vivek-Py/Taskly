@@ -1,11 +1,32 @@
 # Taskly
 
+Taskly is a task management application designed to help users efficiently manage their tasks. It provides a user-friendly interface for creating, editing, deleting, and organizing tasks with various features such as filtering, sorting, and pagination.
+
+## Overview
+
 This project was bootstrapped with following:
 
 - [Create React App](https://create-react-app.dev/)
 - [Yarn](https://yarnpkg.com/)
 - [Tailwind CSS]()
 - [Framer Motion]()
+
+## Assumptions and Design Decisions
+
+- The application assumes users are familiar with basic task management concepts.
+- The design prioritizes simplicity and ease of use, ensuring that users can quickly navigate and manage their tasks.
+- Local persistence is implemented using browser storage to maintain task data between sessions.
+
+## Bonus Milestones Implemented
+
+- Animations and Transitions: Smooth animations and transitions are integrated using Framer Motion to enhance the user experience.
+
+## Interesting Things
+
+- The application leverages Tailwind CSS for rapid UI development and consistent styling.
+- Framer Motion is used to create engaging animations, making the application more interactive and visually appealing.
+- The search capability allows users to quickly find specific tasks, improving overall productivity.
+- Custom fields enable users to tailor the task details to their specific needs, providing flexibility in task management.
 
 ## Milestones Achieved
 
@@ -19,7 +40,7 @@ This project was bootstrapped with following:
 - Self created Milestone: Search Capability
 - Milestone 4: Pagination
 - Milestone 5: Local persistence
-- Milestone 6: Custom fields
+- Milestone 6: Custom fields (Numeric and String)
 
 ### Bonus
 
